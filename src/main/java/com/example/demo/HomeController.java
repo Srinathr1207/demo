@@ -22,10 +22,13 @@ public class HomeController {
             @RequestParam String password,
             Model model) {
 
-        // HARDCODED VALUES
-        if ("Demo".equals(username) && "Srinath@90".equals(password)) {
+        String secretUser = System.getenv("APP_USERNAME");
+        String secretPass = System.getenv("APP_PASSWORD");
+
+        if (secretUser != null && secretUser.equals(username) &&
+                secretPass != null && secretPass.equals(password)) {
             model.addAttribute("user", username);
-            return "welcome"; // We will create this next
+            return "welcome";
         } else {
             model.addAttribute("error", "Invalid username or password!");
             return "index"; // Stay on login page and show error
